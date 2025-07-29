@@ -13,7 +13,7 @@ var app = express();
 
 const connectDB = async () => {
   try {
-    await mongoose.connect('mongodb://localhost:27017/bookstore')
+    await mongoose.connect('mongodb+srv://nguyenminhthuc12032001:zUaG1OuakdjHYHHX@cluster0.xusonfb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
     console.log('Database connected successfully');
   } catch (error) {
     console.error('Database connection failed:', error.message);
