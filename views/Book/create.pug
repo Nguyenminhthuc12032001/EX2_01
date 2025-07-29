@@ -1,0 +1,58 @@
+doctype html
+- const getErrors = (errors, field) => {
+-   const err = (errors || []).find(e => e.path === field)
+-   return err ? err.msg : null
+- }
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Create New Book
+    link(rel="stylesheet", href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css")
+  body(class="bg-gray-50 text-gray-900 font-sans antialiased min-h-screen")
+    div(class="max-w-3xl mx-auto px-6 py-12")
+
+      h1(class="text-4xl font-bold text-center text-gray-800 tracking-tight mb-10") Create New Book
+
+      if message
+        div(class="text-center bg-green-50 border border-green-200 text-green-700 px-6 py-4 rounded-2xl shadow-sm mb-6 text-sm font-medium transition")= message
+
+      if error
+        div(class="text-center bg-red-50 border border-red-200 text-red-700 px-6 py-4 rounded-2xl shadow-sm mb-6 text-sm font-medium transition")= error
+
+      form(action="/books/create", method="POST", enctype="multipart/form-data", class="bg-white p-10 rounded-3xl shadow-xl space-y-8")
+
+        div(class="grid grid-cols-1 sm:grid-cols-2 gap-6")
+            div
+                label(for="title") Title
+                input(type="text", id="title", name="title", required, placeholder="Enter book title", value="Designing Apple Interfaces", class="w-full px-5 py-3 border border-gray-300 rounded-2xl ...")
+                if getErrors(errors, 'title')
+                  div(class="text-red-500 text-sm mt-1")= getErrors(errors, 'title')    
+            div
+                label(for="author") Author
+                input(type="text", id="author", name="author", required, placeholder="Enter author name", value="Jonathan Ive", class="w-full px-5 py-3 border border-gray-300 rounded-2xl ...")
+                if getErrors(errors, 'author')
+                  div(class="text-red-500 text-sm mt-1")= getErrors(errors, 'author')
+
+        div(class="grid grid-cols-1 sm:grid-cols-2 gap-6")
+            div
+                label(for="description") Description
+                textarea(id="description", name="description", rows="4", class="w-full px-5 py-3 border border-gray-300 rounded-2xl ...") A comprehensive guide to creating elegant user interfaces inspired by Apple’s design principles.
+                if getErrors(errors, 'description')
+                  div(class="text-red-500 text-sm mt-1")= getErrors(errors, 'description')
+            div
+                label(for="cover_image") Cover Image
+                input(type="file", id="cover_image", name="cover_image", accept="image/*", class="w-full px-5 py-3 border border-gray-300 rounded-2xl ...")
+                if getErrors(errors, 'cover_image')
+                  div(class="text-red-500 text-sm mt-1")= getErrors(errors, 'cover_image')
+
+        div(class="sm:w-1/2")
+            label(for="price") Price
+                input(type="number", id="price", name="price", required, placeholder="Enter book price", value="49", class="w-full px-5 py-3 border border-gray-300 rounded-2xl ...")
+                if getErrors(errors, 'price')
+                  div(class="text-red-500 text-sm mt-1")= getErrors(errors, 'price')
+
+        div(class="text-center pt-6")
+            button(type="submit", class="px-6 py-3 bg-blue-600 text-white font-semibold rounded-2xl shadow-md hover:bg-blue-700 transition") Create Book
+            a(href="/books/index", class="font-semibold block text-sm text-blue-600 hover:underline mt-4") ← Back to Book List
+
